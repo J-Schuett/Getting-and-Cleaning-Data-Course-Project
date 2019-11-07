@@ -11,7 +11,7 @@ if(file.exists("UCI HAR Dataset") &
     file_path <- "."
 }
 
-# Run the functions to return the needed for data set:
+# Run the functions to return the needed data set:
 # df <- merge_select_and_rename()
 # df_summarized <- run_analysis(df)
 
