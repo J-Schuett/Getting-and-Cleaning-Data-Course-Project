@@ -1,2 +1,13 @@
-# Getting-and-Cleaning-Data-Course-Project
-The Course Project of the Getting and Cleaning Data Coursera course.
+# Readme for the run_analysis.R script
+## Usage
+This script combines data obtained from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip to a tidy new dataframe and summarizes it subsequently (details below). For example run "source("run_analysis.R")", then "df <- merge_select_and_rename()" and finally "df_summarized <- run_analysis(df)". The data must be contained in a folder called "UCI HAR Dataset" or directly in the working directory. The function run_analysis uses the dplyr package.
+
+## The function merge_select_and_rename
+This function first merges the data from "test/X_test.txt" and "train/X_train.txt" by rbind in that order (as well as y_test.txt, y_train.txt and subject_test.txt, subject_train.txt respectively). 
+Next, the columns of merged X dataframe are renamed using features.txt. Then, we select only the columns whose name contains "mean()" or "std()". The values of the merged y are renamed using activity_labels.txt and its column is named "Activity". Finally, the column of the merged subject data is renamed to "SubjectID".
+
+### Columns selected from X
+tBodyAcc-mean()-X, tBodyAcc-mean()-Y, tBodyAcc-mean()-Z, tBodyAcc-std()-X, tBodyAcc-std()-Y, tBodyAcc-std()-Z, tGravityAcc-mean()-X, tGravityAcc-mean()-Y, tGravityAcc-mean()-Z, tGravityAcc-std()-X, tGravityAcc-std()-Y, tGravityAcc-std()-Z, tBodyAccJerk-mean()-X, tBodyAccJerk-mean()-Y, tBodyAccJerk-mean()-Z, tBodyAccJerk-std()-X, tBodyAccJerk-std()-Y, tBodyAccJerk-std()-Z, tBodyGyro-mean()-X, tBodyGyro-mean()-Y, tBodyGyro-mean()-Z, tBodyGyro-std()-X, tBodyGyro-std()-Y, tBodyGyro-std()-Z, tBodyGyroJerk-mean()-X, tBodyGyroJerk-mean()-Y, tBodyGyroJerk-mean()-Z, tBodyGyroJerk-std()-X, tBodyGyroJerk-std()-Y, tBodyGyroJerk-std()-Z, tBodyAccMag-mean(), tBodyAccMag-std(), tGravityAccMag-mean(), tGravityAccMag-std(), tBodyAccJerkMag-mean(), tBodyAccJerkMag-std(), tBodyGyroMag-mean(), tBodyGyroMag-std(), tBodyGyroJerkMag-mean(), tBodyGyroJerkMag-std(), fBodyAcc-mean()-X, fBodyAcc-mean()-Y, fBodyAcc-mean()-Z, fBodyAcc-std()-X, fBodyAcc-std()-Y, fBodyAcc-std()-Z, fBodyAccJerk-mean()-X, fBodyAccJerk-mean()-Y, fBodyAccJerk-mean()-Z, fBodyAccJerk-std()-X, fBodyAccJerk-std()-Y, fBodyAccJerk-std()-Z, fBodyGyro-mean()-X, fBodyGyro-mean()-Y, fBodyGyro-mean()-Z, fBodyGyro-std()-X, fBodyGyro-std()-Y, fBodyGyro-std()-Z, fBodyAccMag-mean(), fBodyAccMag-std(), fBodyBodyAccJerkMag-mean(), fBodyBodyAccJerkMag-std(), fBodyBodyGyroMag-mean(), fBodyBodyGyroMag-std(), fBodyBodyGyroJerkMag-mean(), fBodyBodyGyroJerkMag-std()
+
+## The function run_analysis
+Takes a dataframe resulting from merge_select_and_rename. Uses the dplyr package to group this dataframe by "SubjectID" and "Activity". Then the mean for this grouping is calculated, automatically adding "_mean" to the names of the respective columns.
