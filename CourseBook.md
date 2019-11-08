@@ -1,6 +1,6 @@
 # Code Book
 ## Study Design
-The data was obtained from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip. The original data is split into "X_test.txt", "X_train.txt", "y_test.txt", "y_train.txt", "subject_test.txt" and "subject_train.txt", which we merge by concatenating the respective pairs (by their rows). Data that is used to rename the columns of X_test.txt/X_train.txt is extracted from "features.txt". Only this columns are considered that contain "mean()" or "std()"
+The data was obtained from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip. The original data is split into "X_test.txt", "X_train.txt", "y_test.txt", "y_train.txt", "subject_test.txt" and "subject_train.txt", which we merge by concatenating the respective pairs (by their rows). Data that is used to rename the columns of X_test.txt/X_train.txt is extracted from "features.txt". Only the columns that contain "mean()" or "std()" are considered.
 The values of y_test.txt/y_train.txt are renamed using "activity_labels.txt".
 
 In a second step the resulting data is summarized by grouping according to the subject and y values and then taking the average.
@@ -11,4 +11,4 @@ tBodyAcc-mean()-X, tBodyAcc-mean()-Y, tBodyAcc-mean()-Z, tBodyAcc-std()-X, tBody
 ## Code book
 Information about the original data can be found here http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones and in the README.txt file contained in the zip archive of the data. 
 The features consists of a "SubjectID" of the test subjects (a number between 1 and 30), an "Activity" (one of the 6 values standing, sitting, laying, walking, walking_downstairs and walking_upstairs) and 68 features containing the mean and standard deviation of certain measurements obtained from accelerometers and gyroscopes. These features have numeric values that have been  normalized and bounded within [-1,1].
-In the summarized dataframe "_mean" is added to the feature names (excluding "SubjectID and Activity).
+In the summarized dataframe "_mean" is added to the feature names (excluding SubjectID and Activity).
