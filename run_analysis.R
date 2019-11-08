@@ -1,3 +1,6 @@
+# This script creates a tidy dataframe df and a summarized tibble df_summarized of df.
+# For details check README.md and CodeBook.md.
+
 # The function run_analysis uses the dplyr package
 library(dplyr)
 
@@ -10,10 +13,6 @@ if(file.exists("UCI HAR Dataset") &
 } else{
     file_path <- "."
 }
-
-# Run the functions to return the needed data set:
-# df <- merge_select_and_rename()
-# df_summarized <- run_analysis(df)
 
 # This function takes the path to the files and returns a transformed dataframe.
 merge_select_and_rename <- function(path = file_path){
@@ -51,9 +50,12 @@ load_and_merge <- function(file_prefix = "X", type = "numeric",
 # Renames all columns of X according to features.txt.
 # Only those columns containing "mean()" or "std()" are returned.
 select_and_rename_X_cols <- function(data_X, path = file_path){
+    # get the feature names.
     feature_names <- read.table(file.path(path,"features.txt"), 
                                 header = FALSE, colClasses = c("integer","character"))
+    # assign the feature names to the columns of X.
     names(data_X) <- feature_names[[2]]
+    # select only those columns that contain "mean()" or "std()"
     mean_or_str_features <- grep("mean\\(\\)|std\\(\\)", feature_names[[2]])
     data_X <- data_X[,mean_or_str_features]
 }
@@ -61,9 +63,11 @@ select_and_rename_X_cols <- function(data_X, path = file_path){
 # Renames the entries of y according to activity_labels.txt (but set to lowercase).
 # The column of y is renamed to "Activity" and the transformed vector is returned.
 rename_activities <- function(data_y, path = file_path){
+    # get the activity names
     activity_labels <- read.table(file.path(path,"activity_labels.txt"), header = FALSE, 
                                   colClasses = c("integer","character"))
     activity_labels[[2]] <- tolower(activity_labels[[2]])
+    # assign the activity names to the columns of y.
     data_y <- sapply(data_y, function(x) activity_labels[[2]][x])
     data.frame("Activity" = as.vector(data_y))
 }
@@ -73,5 +77,10 @@ rename_activities <- function(data_y, path = file_path){
 # "SubjectID" and "Activity". Uses the dplyr package.
 run_analysis <- function(df){
     dfg <- group_by(df,SubjectID, Activity) 
-    summarise_all(dfg, funs(mean = mean))
+    summarize_all(dfg, funs(mean = mean))
 }
+
+# Run these functions to obtain the needed data sets:
+df <- merge_select_and_rename()
+df_summarized <- run_analysis(df)
+# write.table(df_summarized, "summarized_data.txt", row.name=FALSE) 
